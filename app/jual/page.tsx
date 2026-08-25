@@ -1,0 +1,1 @@
+export default function Jual(){return <main className="p-8"><h1 className="text-3xl font-bold">Jual Mobil Anda</h1><form className="mt-6 grid gap-4 max-w-xl">{['Merk Mobil','Model','Tahun','Harga','Nomor WhatsApp'].map(x=><input className="border p-3 rounded" placeholder={x} key={x}/>)}<button className="bg-red-600 text-white p-3 rounded">Pasang Iklan</button></form></main>}
