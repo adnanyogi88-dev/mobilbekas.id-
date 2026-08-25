@@ -1,0 +1,1 @@
+export default function HeroSearch(){return <section className="bg-red-600 text-white p-10 text-center"><h2 className="text-4xl font-bold">Cari Mobil Bekas Impianmu</h2><div className="bg-white text-gray-500 rounded-xl p-4 mt-6 max-w-3xl mx-auto">Cari merk, model, harga, lokasi...</div></section>}
