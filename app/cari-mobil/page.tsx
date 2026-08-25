@@ -1,0 +1,2 @@
+const filters=['Merk','Model','Harga','Tahun','Lokasi','Transmisi'];
+export default function CariMobil(){return <main className="p-8 bg-gray-50 min-h-screen"><h1 className="text-3xl font-bold mb-6">Cari Mobil Bekas</h1><div className="grid md:grid-cols-3 gap-4">{filters.map(f=><div className="bg-white p-5 rounded-xl shadow" key={f}>{f}<div className="mt-3 border rounded p-2 text-gray-400">Pilih {f}</div></div>)}</div></main>}
