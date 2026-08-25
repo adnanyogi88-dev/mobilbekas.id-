@@ -1,0 +1,1 @@
+export default function Footer(){return <footer className="bg-gray-900 text-white p-8 mt-10">MobilBekas.id © 2026 - Platform jual beli mobil bekas terpercaya</footer>}
