@@ -1,6 +1,8 @@
 name: Website build
 
 on:
+  push:
+    branches: [main, codex/site-optimization]
   pull_request:
     branches: [main]
   workflow_dispatch:
