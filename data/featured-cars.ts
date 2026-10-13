@@ -26,7 +26,7 @@ export const featuredCars: FeaturedCar[] = [
     transmission: "Automatic",
     engine: "1.5 L",
     meta: "1.5 AT • 32.000 km • Jakarta",
-    tag: "Terverifikasi",
+    tag: "Pilihan"),
   },
   {
     id: "civic-2021",
