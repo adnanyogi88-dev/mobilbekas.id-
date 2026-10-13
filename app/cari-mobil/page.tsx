@@ -1,8 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { cars } from "../../data/cars";
 import { featuredCars } from "../../data/featured-cars";
 
-type Params = Record<string, string | string[] | undefined>;
 type Listing = {
   id: string;
   name: string;
@@ -16,9 +18,6 @@ type Listing = {
   tag: string;
 };
 
-function one(value: string | string[] | undefined): string {
-  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
-}
 function numberFromPrice(value: string): number {
   return Number(value.replace(/[^\d]/g, "")) || 0;
 }
@@ -34,7 +33,7 @@ const listings: Listing[] = [
     km: Number(car.km.replace(/[^\d]/g, "")) || 0,
     location: car.location,
     transmission: car.transmission,
-    tag: "Pilihan",
+    tag: "Contoh",
   })),
   ...featuredCars.map((car) => ({
     id: car.id,
@@ -50,42 +49,50 @@ const listings: Listing[] = [
   })),
 ];
 
-export default async function CariMobil({
-  searchParams,
-}: {
-  searchParams?: Promise<Params> | Params;
-}) {
-  const params: Params = await (searchParams ?? {});
-  const q = one(params.q).trim().toLocaleLowerCase("id");
-  const brand = one(params.brand);
-  const year = one(params.year);
-  const location = one(params.location);
-  const transmission = one(params.transmission);
-  const budget = one(params.budget);
-  const sort = one(params.sort);
-
-  let results = listings.filter((car) => {
-    const matchesQuery =
-      !q || `${car.name} ${car.location} ${car.brand}`.toLocaleLowerCase("id").includes(q);
-    const matchesBrand = !brand || car.brand === brand;
-    const matchesYear = !year || String(car.year) === year;
-    const matchesLocation = !location || car.location === location;
-    const matchesTransmission = !transmission || car.transmission === transmission;
-    const matchesBudget =
-      !budget ||
-      (budget === "under-200" && car.priceValue < 200000000) ||
-      (budget === "200-350" && car.priceValue >= 200000000 && car.priceValue <= 350000000) ||
-      (budget === "over-350" && car.priceValue > 350000000);
-    return matchesQuery && matchesBrand && matchesYear && matchesLocation && matchesTransmission && matchesBudget;
-  });
-
-  if (sort === "price-asc") results = [...results].sort((a, b) => a.priceValue - b.priceValue);
-  if (sort === "price-desc") results = [...results].sort((a, b) => b.priceValue - a.priceValue);
-  if (sort === "year-desc") results = [...results].sort((a, b) => b.year - a.year);
+export default function CariMobil() {
+  const [q, setQ] = useState("");
+  const [brand, setBrand] = useState("");
+  const [year, setYear] = useState("");
+  const [location, setLocation] = useState("");
+  const [transmission, setTransmission] = useState("");
+  const [budget, setBudget] = useState("");
+  const [sort, setSort] = useState("");
 
   const brands = Array.from(new Set(listings.map((car) => car.brand))).sort();
   const years = Array.from(new Set(listings.map((car) => car.year))).sort((a, b) => b - a);
   const locations = Array.from(new Set(listings.map((car) => car.location))).sort();
+
+  const results = useMemo(() => {
+    const query = q.trim().toLocaleLowerCase("id");
+    let filtered = listings.filter((car) => {
+      const matchesQuery = !query || `${car.name} ${car.location} ${car.brand}`.toLocaleLowerCase("id").includes(query);
+      const matchesBrand = !brand || car.brand === brand;
+      const matchesYear = !year || String(car.year) === year;
+      const matchesLocation = !location || car.location === location;
+      const matchesTransmission = !transmission || car.transmission === transmission;
+      const matchesBudget =
+        !budget ||
+        (budget === "under-200" && car.priceValue < 200000000) ||
+        (budget === "200-350" && car.priceValue >= 200000000 && car.priceValue <= 350000000) ||
+        (budget === "over-350" && car.priceValue > 350000000);
+      return matchesQuery && matchesBrand && matchesYear && matchesLocation && matchesTransmission && matchesBudget;
+    });
+
+    if (sort === "price-asc") filtered = [...filtered].sort((a, b) => a.priceValue - b.priceValue);
+    if (sort === "price-desc") filtered = [...filtered].sort((a, b) => b.priceValue - a.priceValue);
+    if (sort === "year-desc") filtered = [...filtered].sort((a, b) => b.year - a.year);
+    return filtered;
+  }, [q, brand, year, location, transmission, budget, sort]);
+
+  function resetFilters() {
+    setQ("");
+    setBrand("");
+    setYear("");
+    setLocation("");
+    setTransmission("");
+    setBudget("");
+    setSort("");
+  }
 
   return (
     <main className="page">
@@ -103,38 +110,37 @@ export default async function CariMobil({
       <div className="catalog-layout">
         <aside className="content-panel">
           <h2 style={{ margin: "0 0 16px", fontSize: 17 }}>Filter pencarian</h2>
-          <form action="/cari-mobil" method="get" className="filters">
+          <div className="filters">
             <label className="field">Merek
-              <select name="brand" defaultValue={brand}><option value="">Semua merek</option>{brands.map((item) => <option key={item} value={item}>{item}</option>)}</select>
+              <select value={brand} onChange={(event) => setBrand(event.target.value)}><option value="">Semua merek</option>{brands.map((item) => <option key={item} value={item}>{item}</option>)}</select>
             </label>
             <label className="field">Tahun
-              <select name="year" defaultValue={year}><option value="">Semua tahun</option>{years.map((item) => <option key={item} value={item}>{item}</option>)}</select>
+              <select value={year} onChange={(event) => setYear(event.target.value)}><option value="">Semua tahun</option>{years.map((item) => <option key={item} value={item}>{item}</option>)}</select>
             </label>
             <label className="field">Lokasi
-              <select name="location" defaultValue={location}><option value="">Semua lokasi</option>{locations.map((item) => <option key={item} value={item}>{item}</option>)}</select>
+              <select value={location} onChange={(event) => setLocation(event.target.value)}><option value="">Semua lokasi</option>{locations.map((item) => <option key={item} value={item}>{item}</option>)}</select>
             </label>
             <label className="field">Transmisi
-              <select name="transmission" defaultValue={transmission}><option value="">Semua transmisi</option><option value="Automatic">Automatic</option><option value="Manual">Manual</option></select>
+              <select value={transmission} onChange={(event) => setTransmission(event.target.value)}><option value="">Semua transmisi</option><option value="Automatic">Automatic</option><option value="Manual">Manual</option></select>
             </label>
             <label className="field">Kisaran harga
-              <select name="budget" defaultValue={budget}>
+              <select value={budget} onChange={(event) => setBudget(event.target.value)}>
                 <option value="">Semua harga</option><option value="under-200">Di bawah Rp 200 juta</option>
                 <option value="200-350">Rp 200–350 juta</option><option value="over-350">Di atas Rp 350 juta</option>
               </select>
             </label>
             <label className="field">Kata kunci
-              <input name="q" type="search" defaultValue={one(params.q)} placeholder="Merek, model, atau kota" />
+              <input type="search" value={q} onChange={(event) => setQ(event.target.value)} placeholder="Merek, model, atau kota" />
             </label>
             <label className="field">Urutkan
-              <select name="sort" defaultValue={sort}><option value="">Rekomendasi</option><option value="price-asc">Harga terendah</option><option value="price-desc">Harga tertinggi</option><option value="year-desc">Tahun terbaru</option></select>
+              <select value={sort} onChange={(event) => setSort(event.target.value)}><option value="">Rekomendasi</option><option value="price-asc">Harga terendah</option><option value="price-desc">Harga tertinggi</option><option value="year-desc">Tahun terbaru</option></select>
             </label>
-            <button type="submit" className="primary-button">Terapkan filter</button>
-            <Link href="/cari-mobil" className="text-link">Hapus semua filter</Link>
-          </form>
+            <button type="button" className="primary-button" onClick={resetFilters}>Hapus semua filter</button>
+          </div>
         </aside>
 
         <section aria-label="Hasil pencarian">
-          <div className="catalog-topline"><span><strong>{results.length}</strong> mobil ditemukan</span><span>Informasi dapat dikonfirmasi kepada penjual</span></div>
+          <div className="catalog-topline"><span><strong>{results.length}</strong> mobil ditemukan</span><span>Data contoh; konfirmasikan detail sebelum transaksi</span></div>
           {results.length ? (
             <div className="catalog-grid">
               {results.map((car, index) => (
@@ -154,7 +160,7 @@ export default async function CariMobil({
               ))}
             </div>
           ) : (
-            <div className="empty-state"><h2>Tidak ada mobil yang cocok</h2><p>Coba ubah kata kunci atau kurangi filter pencarian.</p><Link className="text-link" href="/cari-mobil">Tampilkan semua mobil →</Link></div>
+            <div className="empty-state"><h2>Tidak ada mobil yang cocok</h2><p>Coba ubah kata kunci atau kurangi filter pencarian.</p><button className="text-link" type="button" onClick={resetFilters}>Tampilkan semua mobil →</button></div>
           )}
         </section>
       </div>
