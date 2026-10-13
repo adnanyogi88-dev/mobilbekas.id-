@@ -55,7 +55,7 @@ export default async function CariMobil({
 }: {
   searchParams?: Promise<Params> | Params;
 }) {
-  const params = await (searchParams ?? {});
+  const params: Params = await (searchParams ?? {});
   const q = one(params.q).trim().toLocaleLowerCase("id");
   const brand = one(params.brand);
   const year = one(params.year);
