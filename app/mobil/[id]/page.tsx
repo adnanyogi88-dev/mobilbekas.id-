@@ -95,7 +95,7 @@ export default async function DetailMobil({ params }: Props) {
             <div className="notice">Harga dan ketersediaan dapat berubah. Konfirmasikan dokumen dan kondisi mobil secara langsung.</div>
             <p style={{ marginTop: 22 }}>
               <a className="primary-button" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                Tanyakan lewat WhatsApp <span aria-hidden="true">↗</span>
+                Siapkan pesan WhatsApp <span aria-hidden="true">↗</span>
               </a>
             </p>
           </div>
