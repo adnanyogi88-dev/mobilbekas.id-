@@ -1,1 +1,26 @@
-export default function Login(){return <main className="min-h-screen flex items-center justify-center bg-gray-50"><div className="bg-white p-8 rounded-xl shadow w-full max-w-md"><h1 className="text-2xl font-bold mb-5">Masuk MobilBekas.id</h1><input className="border p-3 w-full rounded mb-3" placeholder="Email"/><input className="border p-3 w-full rounded mb-3" placeholder="Password"/><button className="bg-red-600 text-white w-full p-3 rounded">Masuk</button></div></main>}
+import Link from "next/link";
+
+export default function Login() {
+  return (
+    <main className="page">
+      <header className="nav">
+        <Link className="brand" href="/">MobilBekas<span>.id</span></Link>
+        <nav aria-label="Navigasi utama">
+          <Link href="/">Beranda</Link><Link href="/cari-mobil">Cari Mobil</Link>
+          <Link href="/jual">Jual Mobil</Link><Link href="/login" aria-current="page">Masuk</Link>
+        </nav>
+      </header>
+      <section className="form-page">
+        <div className="form-card">
+          <p className="eyebrow" style={{ color: "var(--red)" }}>Akun pengguna</p>
+          <h1>Masuk ke MobilBekas.id</h1>
+          <p>Fitur autentikasi akun belum tersambung ke layanan backend.</p>
+          <div className="notice">Demi keamanan, jangan masukkan kata sandi sampai sistem login resmi tersedia. Halaman ini belum dapat membuat akun atau memverifikasi pengguna.</div>
+          <Link className="primary-button" href="/cari-mobil">Jelajahi mobil yang tersedia <span aria-hidden="true">→</span></Link>
+          <p style={{ margin: 0 }}>Ingin menjual kendaraan? <Link className="text-link" href="/jual">Siapkan informasi mobil Anda.</Link></p>
+        </div>
+      </section>
+      <footer className="footer"><Link className="brand" href="/">MobilBekas<span>.id</span></Link><p>Temukan mobil pilihan Anda dengan informasi yang jelas.</p></footer>
+    </main>
+  );
+}
