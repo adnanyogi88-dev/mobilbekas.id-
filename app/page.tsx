@@ -1,31 +1,100 @@
-const cars = [
- {id:'avanza-2022',name:'Toyota Avanza Veloz 2022',price:'Rp 235 Juta',meta:'1.5 AT • 32.000 km • Jakarta',tag:'Terverifikasi'},
- {id:'civic-2021',name:'Honda Civic Turbo 2021',price:'Rp 365 Juta',meta:'1.5 Turbo • 18.000 km • Bandung',tag:'Premium'},
- {id:'pajero-2020',name:'Mitsubishi Pajero Sport 2020',price:'Rp 410 Juta',meta:'2.4 Dakar • 45.000 km • Surabaya',tag:'Favorit'},
- {id:'hrv-2023',name:'Honda HR-V SE 2023',price:'Rp 385 Juta',meta:'1.5 CVT • 12.000 km • Jakarta',tag:'Baru'}
+import Link from "next/link";
+import { featuredCars } from "../data/featured-cars";
+
+const benefits = [
+  { value: "Pilihan variatif", label: "Beragam model dan kebutuhan" },
+  { value: "Info transparan", label: "Harga dan spesifikasi mudah dibaca" },
+  { value: "Kontak mudah", label: "Hubungi penjual untuk detail" },
 ];
 
-export default function Home(){
- return <main className="page">
-  <header className="nav"><b>MobilBekas<span>.id</span></b><nav>Beranda　 Cari Mobil　 Jual Mobil　 Dealer　 Artikel　 Login</nav></header>
+export default function Home() {
+  return (
+    <main className="page">
+      <header className="nav">
+        <Link className="brand" href="/" aria-label="MobilBekas.id beranda">
+          MobilBekas<span>.id</span>
+        </Link>
+        <nav aria-label="Navigasi utama">
+          <Link href="/">Beranda</Link>
+          <Link href="/cari-mobil">Cari Mobil</Link>
+          <Link href="/jual">Jual Mobil</Link>
+          <Link href="/login">Masuk</Link>
+        </nav>
+      </header>
 
-  <section className="hero">
-   <div>
-    <h1>Temukan Mobil Bekas Berkualitas</h1>
-    <p>Platform jual beli mobil bekas dengan pencarian cepat, informasi transparan, dan pilihan kendaraan terpercaya.</p>
-    <div className="search">🔎 Cari Toyota, Honda, SUV, MPV, tahun, lokasi <button>Cari Mobil</button></div>
-   </div>
-  </section>
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="eyebrow">Temukan kendaraan berikutnya</p>
+          <h1 id="hero-title">Cari mobil bekas yang cocok untuk perjalanan Anda.</h1>
+          <p className="hero-description">
+            Jelajahi pilihan mobil berdasarkan model, anggaran, tahun, dan lokasi.
+            Bandingkan informasi sebelum menghubungi penjual.
+          </p>
+          <form className="search" action="/cari-mobil" method="get" role="search">
+            <label className="sr-only" htmlFor="q">Cari merek atau model mobil</label>
+            <input id="q" name="q" type="search" placeholder="Contoh: Toyota Avanza, Honda Brio…" />
+            <button type="submit">Cari Mobil <span aria-hidden="true">→</span></button>
+          </form>
+          <p className="search-hint">Mulai dengan merek atau model yang Anda inginkan.</p>
+        </div>
+        <div className="hero-visual" aria-hidden="true">
+          <div className="visual-orbit orbit-one" />
+          <div className="visual-orbit orbit-two" />
+          <div className="visual-car">🚘</div>
+          <div className="visual-caption"><span className="visual-dot" /> Pilihan untuk kebutuhan harian dan keluarga</div>
+        </div>
+      </section>
 
-  <section className="stats">
-   <div>50.000+<small>Mobil tersedia</small></div>
-   <div>10.000+<small>Dealer aktif</small></div>
-   <div>100%<small>Data kendaraan</small></div>
-   <div>24/7<small>Layanan online</small></div>
-  </section>
+      <section className="benefits" aria-label="Keunggulan pencarian">
+        {benefits.map((benefit) => (
+          <article className="benefit" key={benefit.value}>
+            <span className="benefit-icon" aria-hidden="true">✓</span>
+            <div><h2>{benefit.value}</h2><p>{benefit.label}</p></div>
+          </article>
+        ))}
+      </section>
 
-  <section><h2>Rekomendasi Mobil Bekas</h2><div className="grid">{cars.map(c=><article key={c.id}><div className="photo">🚘</div><label>{c.tag}</label><h3>{c.name}</h3><p>{c.meta}</p><strong>{c.price}</strong><a className="detail" href={`/mobil/${c.id}`}>Lihat Detail</a></article>)}</div></section>
+      <section className="listing-section" aria-labelledby="featured-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Kurasi pilihan</p>
+            <h2 id="featured-title">Rekomendasi mobil bekas</h2>
+            <p>Jelajahi beberapa pilihan untuk memulai pencarian Anda.</p>
+          </div>
+          <Link className="text-link" href="/cari-mobil">Lihat semua mobil <span aria-hidden="true">→</span></Link>
+        </div>
+        <div className="car-grid">
+          {featuredCars.map((car, index) => (
+            <article className="car-card" key={car.id}>
+              <Link className="car-image-link" href={`/mobil/${car.id}`} aria-label={`Lihat detail ${car.name}`}>
+                <div className={`car-image car-image-${index + 1}`} aria-hidden="true"><span>🚘</span></div>
+              </Link>
+              <div className="car-card-body">
+                <span className="car-tag">{car.tag}</span>
+                <h3><Link href={`/mobil/${car.id}`}>{car.name}</Link></h3>
+                <p className="car-meta">{car.meta}</p>
+                <p className="car-price">{car.price}</p>
+                <Link className="detail-link" href={`/mobil/${car.id}`}>Lihat detail <span aria-hidden="true">→</span></Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-  <section className="cta"><h2>Ingin Menjual Mobil?</h2><p>Buat iklan kendaraan dan jangkau calon pembeli lebih cepat.</p><button>Pasang Iklan Gratis</button></section>
- </main>
+      <section className="sell-cta">
+        <div>
+          <p className="eyebrow">Punya mobil untuk dijual?</p>
+          <h2>Temukan calon pembeli yang tepat.</h2>
+          <p>Siapkan informasi kendaraan Anda dan mulai dari halaman jual mobil.</p>
+        </div>
+        <Link className="button button-light" href="/jual">Mulai jual mobil <span aria-hidden="true">→</span></Link>
+      </section>
+
+      <footer className="footer">
+        <Link className="brand" href="/">MobilBekas<span>.id</span></Link>
+        <p>Temukan mobil pilihan Anda dengan informasi yang jelas.</p>
+        <span>© {new Date().getFullYear()} MobilBekas.id</span>
+      </footer>
+    </main>
+  );
 }
