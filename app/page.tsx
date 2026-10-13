@@ -60,6 +60,7 @@ export default function Home() {
             <p className="eyebrow">Kurasi pilihan</p>
             <h2 id="featured-title">Rekomendasi mobil bekas</h2>
             <p>Jelajahi beberapa pilihan untuk memulai pencarian Anda.</p>
+            <p className="catalog-note">Data kendaraan saat ini merupakan contoh pengembangan. Konfirmasikan harga dan ketersediaan sebelum bertransaksi.</p>
           </div>
           <Link className="text-link" href="/cari-mobil">Lihat semua mobil <span aria-hidden="true">→</span></Link>
         </div>
