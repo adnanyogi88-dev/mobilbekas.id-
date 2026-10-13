@@ -1,4 +1,4 @@
-import {cars} from '@/data/cars';
+import {cars} from '../data/cars';
 
 export default function CarSearchGrid(){
  return <section className="grid md:grid-cols-3 gap-6">
