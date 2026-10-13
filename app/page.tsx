@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { featuredCars } from "../data/featured-cars";
 
 const benefits = [
-  { value: "Pilihan variatif", label: "Beragam model dan kebutuhan" },
-  { value: "Info transparan", label: "Harga dan spesifikasi mudah dibaca" },
-  { value: "Kontak mudah", label: "Hubungi penjual untuk detail" },
+  { value: "Pencarian praktis", label: "Rancang pencarian sesuai kebutuhan" },
+  { value: "Informasi jelas", label: "Detail kendaraan disiapkan dengan transparan" },
+  { value: "Pengalaman nyaman", label: "Dirancang untuk desktop dan ponsel" },
 ];
 
 export default function Home() {
@@ -15,37 +14,35 @@ export default function Home() {
           MobilBekas<span>.id</span>
         </Link>
         <nav aria-label="Navigasi utama">
-          <Link href="/">Beranda</Link>
+          <Link href="/" aria-current="page">Beranda</Link>
           <Link href="/cari-mobil">Cari Mobil</Link>
           <Link href="/jual">Jual Mobil</Link>
-          <Link href="/login">Masuk</Link>
         </nav>
       </header>
 
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="eyebrow">Temukan kendaraan berikutnya</p>
-          <h1 id="hero-title">Cari mobil bekas yang cocok untuk perjalanan Anda.</h1>
+          <p className="eyebrow">Segera hadir</p>
+          <h1 id="hero-title">Temukan mobil yang tepat untuk perjalanan berikutnya.</h1>
           <p className="hero-description">
-            Jelajahi pilihan mobil berdasarkan model, anggaran, tahun, dan lokasi.
-            Bandingkan informasi sebelum menghubungi penjual.
+            MobilBekas.id sedang menyiapkan pengalaman pencarian mobil bekas yang lebih praktis,
+            jelas, dan nyaman digunakan dari perangkat apa pun.
           </p>
-          <form className="search" action="/cari-mobil" method="get" role="search">
-            <label className="sr-only" htmlFor="q">Cari merek atau model mobil</label>
-            <input id="q" name="q" type="search" placeholder="Contoh: Toyota Avanza, Honda Brio…" />
-            <button type="submit">Cari Mobil <span aria-hidden="true">→</span></button>
-          </form>
-          <p className="search-hint">Mulai dengan merek atau model yang Anda inginkan.</p>
+          <div className="search" role="group" aria-label="Jelajahi katalog">
+            <p style={{ margin: "8px 12px", color: "#17212f" }}>Katalog kendaraan sedang disiapkan.</p>
+            <Link className="primary-button" href="/cari-mobil">Lihat status katalog <span aria-hidden="true">→</span></Link>
+          </div>
+          <p className="search-hint">Kami akan menampilkan kendaraan setelah data listing siap diverifikasi.</p>
         </div>
         <div className="hero-visual" aria-hidden="true">
           <div className="visual-orbit orbit-one" />
           <div className="visual-orbit orbit-two" />
           <div className="visual-car">🚘</div>
-          <div className="visual-caption"><span className="visual-dot" /> Pilihan untuk kebutuhan harian dan keluarga</div>
+          <div className="visual-caption"><span className="visual-dot" /> MobilBekas.id — sedang dipersiapkan</div>
         </div>
       </section>
 
-      <section className="benefits" aria-label="Keunggulan pencarian">
+      <section className="benefits" aria-label="Fokus layanan">
         {benefits.map((benefit) => (
           <article className="benefit" key={benefit.value}>
             <span className="benefit-icon" aria-hidden="true">✓</span>
@@ -54,46 +51,18 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="listing-section" aria-labelledby="featured-title">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Kurasi pilihan</p>
-            <h2 id="featured-title">Rekomendasi mobil bekas</h2>
-            <p>Jelajahi beberapa pilihan untuk memulai pencarian Anda.</p>
-            <p className="catalog-note">Data kendaraan saat ini merupakan contoh pengembangan. Konfirmasikan harga dan ketersediaan sebelum bertransaksi.</p>
-          </div>
-          <Link className="text-link" href="/cari-mobil">Lihat semua mobil <span aria-hidden="true">→</span></Link>
-        </div>
-        <div className="car-grid">
-          {featuredCars.map((car, index) => (
-            <article className="car-card" key={car.id}>
-              <Link className="car-image-link" href={`/mobil/${car.id}`} aria-label={`Lihat detail ${car.name}`}>
-                <div className={`car-image car-image-${index + 1}`} aria-hidden="true"><span>🚘</span></div>
-              </Link>
-              <div className="car-card-body">
-                <span className="car-tag">{car.tag}</span>
-                <h3><Link href={`/mobil/${car.id}`}>{car.name}</Link></h3>
-                <p className="car-meta">{car.meta}</p>
-                <p className="car-price">{car.price}</p>
-                <Link className="detail-link" href={`/mobil/${car.id}`}>Lihat detail <span aria-hidden="true">→</span></Link>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="sell-cta">
-        <div>
-          <p className="eyebrow">Punya mobil untuk dijual?</p>
-          <h2>Temukan calon pembeli yang tepat.</h2>
-          <p>Siapkan informasi kendaraan Anda dan mulai dari halaman jual mobil.</p>
-        </div>
-        <Link className="button button-light" href="/jual">Mulai jual mobil <span aria-hidden="true">→</span></Link>
+      <section className="content-panel" style={{ marginBottom: 42, padding: "clamp(24px, 4vw, 42px)" }} aria-labelledby="launch-title">
+        <p className="eyebrow" style={{ color: "var(--red)" }}>Dalam pengembangan</p>
+        <h2 id="launch-title" style={{ margin: "0 0 10px", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "clamp(24px, 3vw, 32px)" }}>Katalog mobil akan segera tersedia.</h2>
+        <p className="page-intro" style={{ marginBottom: 20 }}>
+          Saat ini belum ada listing kendaraan yang ditampilkan. Kami memilih untuk tidak menayangkan data contoh agar informasi harga dan ketersediaan tidak menyesatkan.
+        </p>
+        <Link className="primary-button" href="/jual">Jelajahi opsi jual mobil <span aria-hidden="true">→</span></Link>
       </section>
 
       <footer className="footer">
         <Link className="brand" href="/">MobilBekas<span>.id</span></Link>
-        <p>Temukan mobil pilihan Anda dengan informasi yang jelas.</p>
+        <p>Platform mobil bekas yang sedang kami siapkan untuk Anda.</p>
         <span>© {new Date().getFullYear()} MobilBekas.id</span>
       </footer>
     </main>
