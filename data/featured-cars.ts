@@ -15,20 +15,6 @@ export type FeaturedCar = {
 
 export const featuredCars: FeaturedCar[] = [
   {
-    id: "avanza-2022",
-    name: "Toyota Avanza Veloz 2022",
-    brand: "Toyota",
-    year: 2022,
-    price: "Rp 235.000.000",
-    priceValue: 235000000,
-    km: 32000,
-    location: "Jakarta",
-    transmission: "Automatic",
-    engine: "1.5 L",
-    meta: "1.5 AT • 32.000 km • Jakarta",
-    tag: "Pilihan",
-  },
-  {
     id: "civic-2021",
     name: "Honda Civic Turbo 2021",
     brand: "Honda",
